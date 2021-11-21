@@ -1,0 +1,55 @@
+- yarn add react-router-dom
+- Create Route path for each page (client)
+- Set condition for login and register if user already login
+- Set Link (router-dom) buttons to CategoryItem
+- ProductList: useLocation (from react-router)
+	+ useState for filter
+	+ useState for sort
+- Pass values of cat, filters, sort to Product components
+- Fetch datas, get products from api
+- Products components: 
+	+ Make get and post requests using (yarn add axios)
+	+ useEffect for filter objects
+	+ useEffect for sort objects
+- Create requestMethods.js to create axios file
+- Create a redux folder to fetch data (LEARN REDUX!!!)
+	+ cartRedux: to update cart everytime add products
+	+ store: global store used in every pages and components
+- yarn add @reduxjs/toolkit react-redux
+- Add Redux components inside index.js
+- Working on Cart page
+	+ yarn add react-stripe-checkout
+	+ created Stripe payment method
+- Add Stripe to Cart page
+- Create a Success page (for payment successful)
+- Create userRedux.js and apiCalls.js (for login part)
+- Working on Login page (fetch datas username and password, connect font and backend)
+- Using persist to keep user login after that
+- yarn add redux-persist
+- Create a admin dashboard to control products, login
+
+***Admin Dashboard
+- Create login page
+- Create Redux folder
+- yarn add axios @reduxjs/toolkit react-redux redux-persist
+- Copy mostly everything from Redux folder of client to admin
+- Create the same requestMethods
+
+***Integrate admin dashboard with api
+- WidgetSmall and WidgetLarge
+- yarn add timeago.js
+
+***Working on Products using Admin Dashboard
+- Create productRedux.js (to create/edit products)
+	+ Connect with requestMethods
+	+ Add dispatch for apiCalls, productRedux
+	+ Fetch data from ProductList, Product
+
+***NewProduct
+- Upload image to Firebase, it will take the response (img url), then send to apiCalls
+- Fix and Add API connections NewProduct
+- Create Firebase account/project
+
+- Create firebase.js
+yarn add firebase
+- Add code firebase in NewProduct

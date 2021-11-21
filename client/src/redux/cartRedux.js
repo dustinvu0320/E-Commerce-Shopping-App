@@ -1,0 +1,23 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+// Create Redux state
+const cartSlice = createSlice({
+  name: "cart",
+  initialState: {
+    products: [],
+    quantity: 0,
+    total: 0,
+  },
+  reducers: {
+    addProduct: (state, action) => {
+      state.quantity += 1;
+    // Add new product to list
+      state.products.push(action.payload);
+      state.total += action.payload.price * action.payload.quantity;
+    },
+  },
+});
+
+// export fuctions
+export const { addProduct } = cartSlice.actions;
+export default cartSlice.reducer;
