@@ -210,7 +210,7 @@ const Cart = () => {
       } catch {}
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart.total, history]);
+  }, [stripeToken, cart, cart.total, history]);
 
   return (
     <Container>
@@ -230,7 +230,7 @@ const Cart = () => {
           <Info>
             {/* Get product info and pass */}
             {cart.products.map((product) => (
-              <Product>
+              <Product key={product._id}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>

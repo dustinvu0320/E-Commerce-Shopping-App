@@ -1,11 +1,12 @@
-import { Badge, Menu } from "@material-ui/core";
+import { Badge } from "@material-ui/core";
 import { ShoppingCartOutlined } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import LogoImage from "../images/dark-logo.png";
+import { logout } from "../redux/userRedux";
 
 const Container = styled.div`
   height: 80px;
@@ -91,10 +92,32 @@ const MenuItem = styled.div`
   :Link {
     text-decoration: none;
   }
+  font-weight: bold;
+  color: black;
+`;
+
+const LogoutButton = styled.button`
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 25px;
+  border-radius: 10px;
+  border-color: gray;
+  ${mobile({ fontSize: "12px", marginLeft: "7px" })}
 `;
 
 const Navbar = () => {
+  const user = useSelector((state) => state.user.currentUser);
   const quantity = useSelector((state) => state.cart.quantity);
+
+  const dispatch = useDispatch();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+
+    dispatch(logout());
+  };
+
   return (
     <Container>
       {/* 3 parts: left, center, right */}
@@ -111,16 +134,31 @@ const Navbar = () => {
           </Link>
         </Center>
         <Right>
-          <Link to="/register" style={{ textDecoration: "none" }}>
-            <MenuItem>SIGN UP</MenuItem>
-          </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <MenuItem>LOG IN</MenuItem>
-          </Link>
+          {user ? (
+            <>
+              <MenuItem>{user.username}</MenuItem>
+              <LogoutButton onClick={(e) => handleLogout(e)}>
+                LOGOUT
+              </LogoutButton>
+            </>
+          ) : (
+            <>
+              <Link to="/register" style={{ textDecoration: "none" }}>
+                <MenuItem>SIGN UP</MenuItem>
+              </Link>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <MenuItem>LOG IN</MenuItem>
+              </Link>
+            </>
+          )}
           <Link to="/cart">
             <MenuItem>
               {/* Badge with shopping cart icon from material-UI */}
-              <Badge badgeContent={quantity} color="primary">
+              <Badge
+                overlap="rectangular"
+                badgeContent={quantity}
+                color="primary"
+              >
                 <ShoppingCartOutlined />
               </Badge>
             </MenuItem>

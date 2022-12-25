@@ -19,10 +19,10 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/login">
+        {/* <Route path="/login">
           <Login />
-        </Route>
-        {admin && (
+        </Route> */}
+        {admin ? (
           <>
             <Topbar />
             <div className="container">
@@ -51,6 +51,8 @@ function App() {
               </Route>
             </div>
           </>
+        ) : (
+          <div>Login</div>
         )}
       </Switch>
     </Router>
