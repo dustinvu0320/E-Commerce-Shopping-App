@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 // Create info schema
 const OrderSchema = new mongoose.Schema(
   {
-    userId: { type: String, required: true },
+    userId: { type: String },
+    stripeId: {type: String, required: true},
     products: [
       {
         productId: { type: String },

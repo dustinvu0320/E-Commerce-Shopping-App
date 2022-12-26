@@ -52,45 +52,9 @@ const Price = styled.span`
   font-size: 40px;
 `;
 
-// Contains color and size filters
-const FilterContainer = styled.div`
-  width: 50%;
-  margin: 30px 0px;
-  display: flex;
-  justify-content: space-between;
-  ${mobile({ width: "100%" })}
-`;
-
-const Filter = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const FilterTitle = styled.span`
-  font-size: 20px;
-  font-weight: 200;
-`;
-
-const FilterColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  /* Props color */
-  background-color: ${(props) => props.color};
-  margin: 0px 5px;
-  cursor: pointer;
-`;
-
-const FilterSize = styled.select`
-  margin-left: 10px;
-  padding: 5px;
-`;
-
-const FilterSizeOption = styled.option``;
-
 // Contains amount and button
 const AddContainer = styled.div`
-  width: 50%;
+  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -119,7 +83,7 @@ const Button = styled.button`
   border: 2px solid teal;
   background-color: white;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
 
   &:hover {
     background-color: #f8f4f4;
@@ -129,13 +93,13 @@ const Button = styled.button`
 const Product = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
+
   // Fetch product data
   const [product, setProduct] = useState({});
+
   // Increase or decrease quantity function
   const [quantity, setQuantity] = useState(1);
-  // Size and color set functions
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
+
   // Dispatch actions from Redux
   const dispatch = useDispatch();
 
@@ -161,7 +125,7 @@ const Product = () => {
 
   // Update cart
   const handleClick = () => {
-    dispatch(addProduct({ ...product, quantity, color, size }));
+    dispatch(addProduct({ ...product, quantity }));
   };
 
   return (
@@ -180,25 +144,7 @@ const Product = () => {
           <Title>{product.title}</Title>
           <Desc>{product.desc}</Desc>
           <Price>$ {product.price}</Price>
-          <FilterContainer>
-            {/* color and size filters */}
-            <Filter>
-              {/* Color */}
-              {product.color?.map((c) => (
-                <FilterColor color={c} key={c} onClick={() => setColor(c)} />
-              ))}
-            </Filter>
-            <Filter>
-              {/* Size */}
-              <FilterTitle>Size</FilterTitle>
-              {/* onChange use for size because of option */}
-              <FilterSize onChange={(e) => setSize(e.target.value)}>
-                {product.size?.map((s) => (
-                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
-                ))}
-              </FilterSize>
-            </Filter>
-          </FilterContainer>
+
           {/* amount and add button */}
           <AddContainer>
             <AmountContainer>

@@ -53,6 +53,7 @@ const Circle = styled.div`
 
 const Image = styled.img`
   height: 75%;
+  overflow: hidden;
   /* change z-index to front of circle */
   z-index: 2;
 `;

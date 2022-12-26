@@ -1,16 +1,12 @@
 import { Add, Remove } from "@material-ui/icons";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import Checkout from "../components/Checkout";
 import { mobile } from "../responsive";
-import StripeCheckout from "react-stripe-checkout";
-import { useEffect, useState } from "react";
-import { userRequest } from "../requestMethods";
-import { useHistory } from "react-router";
-
-const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 
@@ -176,41 +172,8 @@ const SummaryItemText = styled.span``;
 
 const SummaryItemPrice = styled.span``;
 
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #292727;
-  color: white;
-  font-weight: 600;
-`;
-
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
-  const [stripeToken, setStripeToken] = useState(null);
-  const history = useHistory();
-
-  // Stripe method
-  const onToken = (token) => {
-    setStripeToken(token);
-  };
-
-  // Connect Stripe api with front end
-  useEffect(() => {
-    const makeRequest = async () => {
-      try {
-        const res = await userRequest.post("/checkout/payment", {
-          tokenId: stripeToken.id,
-          amount: cart.total * 100,
-        });
-        history.push("/success", {
-          stripeData: res.data,
-          products: cart,
-        });
-      } catch {}
-    };
-    stripeToken && makeRequest();
-  }, [stripeToken, cart, cart.total, history]);
 
   return (
     <Container>
@@ -219,18 +182,21 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <Link to="/">
+            <TopButton>CONTINUE SHOPPING</TopButton>
+          </Link>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>{`Shopping Bag (${cart.quantity})`}</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          {/* Stripe Payment Method */}
+          <Checkout />
         </Top>
         <Bottom>
           <Info>
             {/* Get product info and pass */}
-            {cart.products.map((product) => (
-              <Product key={product._id}>
+            {cart.products.map((product, key) => (
+              <Product key={key}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>
@@ -279,18 +245,7 @@ const Cart = () => {
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             {/* Stripe Payment method */}
-            <StripeCheckout
-              name="DustinV Shop"
-              image="https://avatars.githubusercontent.com/u/78432157?s=400&u=a3542854353b321e90e5f526d6ac7d5b30a702bf&v=4"
-              billingAddress
-              shippingAddress
-              description={`Your total is $${cart.total}`}
-              amount={cart.total * 100}
-              token={onToken}
-              stripeKey={KEY}
-            >
-              <Button>CHECKOUT NOW</Button>
-            </StripeCheckout>
+            <Checkout />
           </Summary>
         </Bottom>
       </Wrapper>
