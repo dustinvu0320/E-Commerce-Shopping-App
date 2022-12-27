@@ -136,7 +136,7 @@ const Navbar = () => {
         <Right>
           {user ? (
             <>
-              <MenuItem>{user.username}</MenuItem>
+              <MenuItem>{user.fullName}</MenuItem>
               <LogoutButton onClick={(e) => handleLogout(e)}>
                 LOGOUT
               </LogoutButton>

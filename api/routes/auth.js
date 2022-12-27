@@ -38,8 +38,12 @@ router.post("/login", async (req, res) => {
   try {
     // Find user
     const user = await User.findOne({ username: req.body.username });
+
     // If there is no user
-    !user && res.status(401).json("Username is not found!");
+    if (!user) {
+      res.status(401).json("Username is not found!");
+      return;
+    } 
     // Find and get password from database (decrypt)
     const hashedPassword = CryptoJS.AES.decrypt(
       user.password,
@@ -47,9 +51,12 @@ router.post("/login", async (req, res) => {
     );
     // Decrypt password
     const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+    
     // If password is not matched
-    originalPassword !== req.body.password &&
+    if (originalPassword !== req.body.password) {
       res.status(401).json("Wrong credentials!");
+      return;
+    }
 
     // Store _id and isAdmin into JWT
     const accessToken = jwt.sign(
