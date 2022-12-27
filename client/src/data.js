@@ -13,14 +13,14 @@ export const sliderItems = [
   {
     id: 2,
     img: secondSlide,
-    title: "PROFESSIONAL OUTFIT",
+    title: "SUIT JACKET",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "DDDDDD",
   },
   {
     id: 3,
     img: thirdSlide,
-    title: "DRESS COLLECTION",
+    title: "WOMEN's DRESS",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "fbf0f4",
   },

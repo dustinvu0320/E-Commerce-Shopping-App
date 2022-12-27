@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import axios from "axios";
+import { useState } from "react";
+import { publicRequest } from "../requestMethods";
 
 const Container = styled.div`
   /* width and height fully page */
@@ -61,24 +64,66 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(false);
+    try {
+      const res = await publicRequest.post("/auth/register", {
+        fullName: fullName,
+        username: username,
+        email: email,
+        password: password,
+      });
+      res.data && window.location.replace("/login");
+    } catch (err) {
+      console.log(err);
+      setError(err);
+    }
+  };
+
   return (
     <Container>
       {/* Contains title, form to register, agreement, and button */}
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input placeholder="First Name" />
-          <Input placeholder="Last Name" />
-          <Input placeholder="Username" />
-          <Input placeholder="Email" />
-          <Input type="password" placeholder="Password" />
-          <Input type="password" placeholder="Confirm Password" />
+        <Form onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            placeholder="Full Name"
+            onChange={(e) => setFullName(e)}
+          />
+          <Input
+            type="text"
+            placeholder="Username"
+            onChange={(e) => setUsername(e)}
+          />
+          <Input
+            type="email"
+            placeholder="Email"
+            onChange={(e) => setEmail(e)}
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e)}
+          />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button type="submit">CREATE</Button>
         </Form>
+        {error && (
+          <span style={{ color: "red", marginTop: "10px" }}>
+            Something went wrong!
+          </span>
+        )}
       </Wrapper>
     </Container>
   );

@@ -8,8 +8,10 @@ const jwt = require("jsonwebtoken");
 // REGISTER : post
 // async and await : help program wait until savedUser finshed saving info
 router.post("/register", async (req, res) => {
+  console.log(res.body);
   // Create new user info
   const newUser = new User({
+    fullName: req.body.fullName,
     username: req.body.username,
     email: req.body.email,
     // Secret password: encrypt password
