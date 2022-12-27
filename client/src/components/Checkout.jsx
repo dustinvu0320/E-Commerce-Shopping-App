@@ -29,6 +29,8 @@ const Checkout = () => {
 
   const [stripeToken, setStripeToken] = useState(null);
 
+  const [orderId, setOrderId] = useState("");
+
   // Stripe method
   const onToken = (token) => {
     setStripeToken(token);
@@ -67,14 +69,14 @@ const Checkout = () => {
 
         createOrder(res.data);
         history.push("/success", {
-          orderId: res.data._id,
+          orderId: orderId,
         });
       } catch (error) {
         console.log(error);
       }
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart.total, createOrder, history]);
+  }, [stripeToken, cart.total, createOrder, history, orderId]);
 
   return (
     <StripeCheckout

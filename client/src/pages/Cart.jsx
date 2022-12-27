@@ -7,6 +7,9 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Checkout from "../components/Checkout";
 import { mobile } from "../responsive";
+import { DeleteOutline } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
+import { deleteProduct } from "../redux/cartRedux";
 
 const Container = styled.div``;
 
@@ -76,12 +79,13 @@ const Product = styled.div`
 // Contains image, and details of product
 const ProductDetail = styled.div`
   /* Ratio with priceDetail */
-  flex: 2;
+  flex: 3;
   display: flex;
 `;
 
 const Image = styled.img`
-  width: 200px;
+  width: 15vh;
+  height: 15vh;
 `;
 
 // Details: name, id, color, size
@@ -97,25 +101,22 @@ const ProductName = styled.span``;
 
 const ProductId = styled.span``;
 
-const ProductColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  /* props color */
-  background-color: ${(props) => props.color};
-`;
-
-const ProductSize = styled.span``;
-
 // Contains amount and price
 const PriceDetail = styled.div`
   /* Ratio with ProductDetail */
-  flex: 1;
+  flex: 2;
   display: flex;
   /* vertical */
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const DeleteCart = styled.div`
+  color: red;
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
 `;
 
 // amount and 2 icons
@@ -174,6 +175,15 @@ const SummaryItemPrice = styled.span``;
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const dispatch = useDispatch();
+
+  const handleDelete = (e, product) => {
+    e.preventDefault();
+
+    dispatch(deleteProduct(product));
+  };
 
   return (
     <Container>
@@ -190,8 +200,15 @@ const Cart = () => {
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
           {/* Stripe Payment Method */}
-          <Checkout />
+          {currentUser ? (
+            <Checkout />
+          ) : (
+            <Link to="/login">
+              <TopButton>LOGIN TO CHECKOUT</TopButton>
+            </Link>
+          )}
         </Top>
+
         <Bottom>
           <Info>
             {/* Get product info and pass */}
@@ -206,12 +223,9 @@ const Cart = () => {
                     <ProductId>
                       <b>ID:</b> {product._id}
                     </ProductId>
-                    <ProductColor color={product.color} />
-                    <ProductSize>
-                      <b>Size:</b> {product.size}
-                    </ProductSize>
                   </Details>
                 </ProductDetail>
+
                 <PriceDetail>
                   <ProductAmountContainer>
                     <Add />
@@ -222,10 +236,19 @@ const Cart = () => {
                     $ {product.price * product.quantity}
                   </ProductPrice>
                 </PriceDetail>
+
+                <DeleteCart>
+                  <DeleteOutline
+                    onClick={(e) => handleDelete(e, product)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </DeleteCart>
               </Product>
             ))}
             <Hr />
           </Info>
+
+          {/* Checkout Part */}
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
@@ -245,7 +268,13 @@ const Cart = () => {
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             {/* Stripe Payment method */}
-            <Checkout />
+            {currentUser ? (
+              <Checkout />
+            ) : (
+              <Link to="/login">
+                <TopButton>LOGIN TO CHECKOUT</TopButton>
+              </Link>
+            )}
           </Summary>
         </Bottom>
       </Wrapper>

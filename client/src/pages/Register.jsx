@@ -85,23 +85,6 @@ const Register = () => {
     register(dispatch, inputs);
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setError(false);
-  //   try {
-  //     const res = await publicRequest.post("/auth/register", {
-  //       fullName: fullName,
-  //       username: username,
-  //       email: email,
-  //       password: password,
-  //     });
-  //     res.data && window.location.replace("/login");
-  //   } catch (err) {
-  //     console.log(err);
-  //     setError(err);
-  //   }
-  // };
-
   return (
     <Container>
       {/* Contains title, form to register, agreement, and button */}
