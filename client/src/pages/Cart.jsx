@@ -1,15 +1,16 @@
-import { Add, Remove } from "@material-ui/icons";
-import { useSelector } from "react-redux";
+import { Add, Remove, DeleteOutline } from "@material-ui/icons";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+
 import styled from "styled-components";
+import { mobile } from "../responsive";
+
+import { deleteProduct, clearCart } from "../redux/cartRedux";
+
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Checkout from "../components/Checkout";
-import { mobile } from "../responsive";
-import { DeleteOutline } from "@material-ui/icons";
-import { useDispatch } from "react-redux";
-import { deleteProduct } from "../redux/cartRedux";
 
 const Container = styled.div``;
 
@@ -54,6 +55,23 @@ const TopText = styled.span`
   text-decoration: underline;
   cursor: pointer;
   margin: 0px 10px;
+`;
+
+const Middle = styled.div`
+  display: flex;
+  justify-content: end;
+  margin-bottom: 5px;
+`;
+
+const ResetCart = styled.button`
+  color: red;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  background-color: transparent;
 `;
 
 // Bottom part: info part and summary part (ratio 3:1)
@@ -179,12 +197,6 @@ const Cart = () => {
 
   const dispatch = useDispatch();
 
-  const handleDelete = (e, product) => {
-    e.preventDefault();
-
-    dispatch(deleteProduct(product));
-  };
-
   return (
     <Container>
       <Navbar />
@@ -208,6 +220,12 @@ const Cart = () => {
             </Link>
           )}
         </Top>
+
+        <Middle>
+          <ResetCart onClick={() => dispatch(clearCart())}>
+            Reset Cart
+          </ResetCart>
+        </Middle>
 
         <Bottom>
           <Info>
@@ -239,7 +257,7 @@ const Cart = () => {
 
                 <DeleteCart>
                   <DeleteOutline
-                    onClick={(e) => handleDelete(e, product)}
+                    onClick={() => dispatch(deleteProduct(product))}
                     style={{ cursor: "pointer" }}
                   />
                 </DeleteCart>
@@ -267,6 +285,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
+
             {/* Stripe Payment method */}
             {currentUser ? (
               <Checkout />

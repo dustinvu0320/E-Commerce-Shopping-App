@@ -70,7 +70,7 @@ const Products = ({ cat, filters, sort }) => {
           ))
         : products
             // Get 8 products to present
-            .slice(0, 10)
+            .slice(0, 20)
             .map((item) => <Product item={item} key={item._id} />)}
     </Container>
   );

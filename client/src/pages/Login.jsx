@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { login } from "../redux/apiCalls";
 import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -17,6 +19,19 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const BackButton = styled.button`
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: none;
+  padding: 12px 12px;
+  background-color: #3f3f3f;
+  color: white;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 `;
 
 // Contains title, form of input, button, link
@@ -61,11 +76,12 @@ const Button = styled.button`
 `;
 
 // a element for link
-const Link = styled.a`
+const Register = styled.span`
   margin: 5px 0px;
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
+  color: black;
 `;
 
 // When login fail
@@ -86,6 +102,13 @@ const Login = () => {
 
   return (
     <Container>
+      <Link to="/">
+        <BackButton>
+          <KeyboardBackspaceIcon style={{ marginRight: 5 }} />
+          Back
+        </BackButton>
+      </Link>
+
       {/* Contains title, form of input, button, links */}
       <Wrapper>
         <Title>SIGN IN</Title>
@@ -103,8 +126,10 @@ const Login = () => {
             LOGIN
           </Button>
           {error && <Error>Missing or Wrong Password...</Error>}
-          <Link>FORGOT YOUR PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <Register>FORGOT YOUR PASSWORD?</Register>
+          <Link to="/register">
+            <Register>CREATE A NEW ACCOUNT</Register>
+          </Link>
         </Form>
       </Wrapper>
     </Container>

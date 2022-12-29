@@ -3,6 +3,8 @@ import { mobile } from "../responsive";
 import { useState } from "react";
 import { register } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   /* width and height fully page */
@@ -19,6 +21,20 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+`;
+
+const BackButton = styled.button`
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: none;
+  padding: 12px 12px;
+  background-color: #3f3f3f;
+  color: white;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 `;
 
 // A Box of registration information
@@ -87,6 +103,13 @@ const Register = () => {
 
   return (
     <Container>
+      <Link to="/">
+        <BackButton>
+          <KeyboardBackspaceIcon style={{ marginRight: 5 }} />
+          Back
+        </BackButton>
+      </Link>
+
       {/* Contains title, form to register, agreement, and button */}
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>

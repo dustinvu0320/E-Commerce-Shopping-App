@@ -84,6 +84,20 @@ const Right = styled.div`
   ${mobile({ flex: 2, justifyContent: "center" })}
 `;
 
+const MenuItem1 = styled.div`
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 25px;
+  ${mobile({ fontSize: "12px", marginLeft: "7px" })}
+  :Link {
+    text-decoration: none;
+  }
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  text-decoration: underline;
+`;
+
 const MenuItem = styled.div`
   font-size: 18px;
   cursor: pointer;
@@ -136,7 +150,7 @@ const Navbar = () => {
         <Right>
           {user ? (
             <>
-              <MenuItem>{user.fullName}</MenuItem>
+              <MenuItem1>{user.fullName}</MenuItem1>
               <LogoutButton onClick={(e) => handleLogout(e)}>
                 LOGOUT
               </LogoutButton>

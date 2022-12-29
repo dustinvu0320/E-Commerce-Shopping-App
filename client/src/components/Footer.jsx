@@ -83,7 +83,6 @@ const Right = styled.div`
   flex: 1;
   padding: 20px;
   ${mobile({ backgroundColor: "#e6f7ff" })}
-
 `;
 
 const ContactItem = styled.div`
@@ -94,7 +93,7 @@ const ContactItem = styled.div`
 `;
 
 const Payment = styled.img`
-    width: 50%;
+  width: 50%;
 `;
 
 const Footer = () => {
@@ -147,13 +146,15 @@ const Footer = () => {
         {/* 3 icons from material UI */}
         {/* CSS inside of material UI icons using style */}
         <ContactItem>
-          <Room style={{ color: "#CD5C5C", marginRight: "10px" }} /> 123 Diamond Ring Rd, Houston, TX
+          <Room style={{ color: "#CD5C5C", marginRight: "10px" }} /> Houston, TX
         </ContactItem>
         <ContactItem>
-          <Phone style={{ color: "green", marginRight: "10px" }} /> (123) 456 - 7890
+          <Phone style={{ color: "green", marginRight: "10px" }} /> (123) 456 -
+          7890
         </ContactItem>
         <ContactItem>
-          <MailOutline style={{ color: "#007CC7", marginRight: "10px" }} /> dustinvu123@fullstack.dev
+          <MailOutline style={{ color: "#007CC7", marginRight: "10px" }} />{" "}
+          dustinvu@fullstack.dev
         </ContactItem>
         <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
       </Right>

@@ -1,9 +1,8 @@
 import StripeCheckout from "react-stripe-checkout";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { userRequest } from "../requestMethods";
-import { useSelector, useDispatch } from "react-redux";
-import { clearProduct } from "../redux/cartRedux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
 const TopButton = styled.button`
@@ -21,7 +20,6 @@ const TopButton = styled.button`
 const Checkout = () => {
   const KEY = process.env.REACT_APP_STRIPE;
 
-  const dispatch = useDispatch();
   const history = useHistory();
 
   const cart = useSelector((state) => state.cart);
@@ -36,27 +34,24 @@ const Checkout = () => {
     setStripeToken(token);
   };
 
-  const createOrder = useCallback(
-    async (stripe) => {
-      try {
-        await userRequest.post("/orders", {
-          userId: currentUser ? currentUser._id : null,
-          stripeId: stripe.id,
-          products: cart.products.map((item) => ({
-            productId: item._id,
-            quantity: item.quantity,
-          })),
-          amount: cart.total,
-          address: stripe.billing_details.address,
-        });
+  const createOrder = (stripe) => {
+    try {
+      const res = userRequest.post("/orders", {
+        userId: currentUser._id,
+        stripeId: stripe.id,
+        products: cart.products.map((item) => ({
+          productId: item._id,
+          quantity: item.quantity,
+        })),
+        amount: cart.total,
+        address: stripe.billing_details.address,
+      });
 
-        dispatch(clearProduct());
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [cart.products, cart.total, currentUser, dispatch]
-  );
+      setOrderId(res.data._id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Connect Stripe api with front end
   useEffect(() => {
@@ -68,6 +63,7 @@ const Checkout = () => {
         });
 
         createOrder(res.data);
+
         history.push("/success", {
           orderId: orderId,
         });
@@ -76,7 +72,8 @@ const Checkout = () => {
       }
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart.total, createOrder, history, orderId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stripeToken]);
 
   return (
     <StripeCheckout
@@ -89,7 +86,9 @@ const Checkout = () => {
       token={onToken}
       stripeKey={KEY}
     >
-      <TopButton type="filled">CHECKOUT NOW</TopButton>
+      <TopButton type="filled" disabled={cart.total === 0}>
+        CHECKOUT NOW
+      </TopButton>
     </StripeCheckout>
   );
 };

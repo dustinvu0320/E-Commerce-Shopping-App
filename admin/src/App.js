@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 
 // React-router-dom website for more info how to implement
 function App() {
-  const admin = useSelector((state) => state.user.currentUser.isAdmin);
+  const admin = useSelector((state) => state.user.currentUser);
 
   return (
     <Router>
@@ -52,7 +52,9 @@ function App() {
             </div>
           </>
         ) : (
-          <div>Login</div>
+          <Route path="/login">
+            <Login />
+          </Route>
         )}
       </Switch>
     </Router>
