@@ -52,8 +52,9 @@ const Circle = styled.div`
 `;
 
 const Image = styled.img`
-  height: 75%;
-  overflow: hidden;
+  height: 80%;
+  width: 80%;
+  object-fit: contain;
   /* change z-index to front of circle */
   z-index: 2;
 `;
@@ -88,7 +89,10 @@ const Product = ({ item }) => {
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <Link to={`/product/${item._id}`}>
+          <Link
+            to={`/product/${item._id}`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
             <SearchOutlined />
           </Link>
         </Icon>

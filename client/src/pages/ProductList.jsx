@@ -13,6 +13,9 @@ const Container = styled.div``;
 
 const Title = styled.h1`
   margin: 20px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
 `;
 
 const FilterContainer = styled.div`

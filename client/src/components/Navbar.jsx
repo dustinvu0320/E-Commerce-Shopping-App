@@ -1,10 +1,10 @@
 import { Badge } from "@material-ui/core";
 import { ShoppingCartOutlined } from "@material-ui/icons";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import LogoImage from "../images/dark-logo.png";
 import { logout } from "../redux/userRedux";
 
@@ -62,6 +62,7 @@ const Button = styled.button`
   font-size: 14px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  cursor: pointer;
 `;
 
 // Center part: Name Logo
@@ -121,6 +122,8 @@ const LogoutButton = styled.button`
 `;
 
 const Navbar = () => {
+  const [searchValue, setSearchValue] = useState(" ");
+
   const user = useSelector((state) => state.user.currentUser);
   const quantity = useSelector((state) => state.cart.quantity);
 
@@ -132,14 +135,24 @@ const Navbar = () => {
     dispatch(logout());
   };
 
+  const history = useHistory();
+
+  const handleSearch = () => {
+    history.push(`/products/${searchValue}`);
+  };
+
   return (
     <Container>
       {/* 3 parts: left, center, right */}
       <Wrapper>
         <Left>
           <SearchContainer>
-            <Input placeholder="brand, product" />
-            <Button>Search</Button>
+            <Input
+              placeholder="categories..."
+              onChange={(e) => setSearchValue(e.target.value)}
+              onSubmit={handleSearch}
+            />
+            <Button onClick={handleSearch}>Search</Button>
           </SearchContainer>
         </Left>
         <Center>

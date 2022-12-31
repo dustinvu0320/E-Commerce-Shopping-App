@@ -9,6 +9,7 @@ export const sliderItems = [
     title: "MEN's CLOTHES",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "f5fafd",
+    cat: "men",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ export const sliderItems = [
     title: "SUIT JACKET",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "DDDDDD",
+    cat: "suits",
   },
   {
     id: 3,
@@ -23,6 +25,7 @@ export const sliderItems = [
     title: "WOMEN's DRESS",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "fbf0f4",
+    cat: "dress",
   },
 ];
 
@@ -30,19 +33,19 @@ export const categories = [
   {
     id: 1,
     img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    title: "LIGHT JACKETS",
-    cat: "jackets",
+    title: "WOMEN STYLE!",
+    cat: "women",
   },
   {
     id: 2,
     img: "https://menshairstyle.funtouzy.com/wp-content/uploads/2019/09/Sweet-Couple-Clothes-Photography-26.jpg",
-    title: "COUPLE STYLE!",
-    cat: "men",
+    title: "SHIRT LOVERS",
+    cat: "shirts",
   },
   {
     id: 3,
     img: "https://images.unsplash.com/photo-1516257984-b1b4d707412e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWVucyUyMGZhc2hpb258ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-    title: "LOUNGEWEAR LOVE",
-    cat: "hats",
+    title: "LIGHT JACKETS",
+    cat: "jackets",
   },
 ];
