@@ -202,7 +202,7 @@ const Cart = () => {
       <Navbar />
       <Announcement />
       <Wrapper>
-        <Title>YOUR BAG</Title>
+        <Title>Shopping Cart</Title>
         <Top>
           <Link to="/">
             <TopButton>CONTINUE SHOPPING</TopButton>

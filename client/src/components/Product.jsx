@@ -5,6 +5,8 @@ import {
 } from "@material-ui/icons";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 // Contains 3 icons inside
 const Info = styled.div`
@@ -79,6 +81,15 @@ const Icon = styled.div`
 
 // {item} : props
 const Product = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const quantity = 1;
+
+  // Update cart
+  const handleClick = () => {
+    dispatch(addProduct({ ...item, quantity }));
+  };
+
   return (
     <Container>
       <Circle />
@@ -86,7 +97,7 @@ const Product = ({ item }) => {
       {/* 3 icons for each image (cart, search, like) */}
       <Info>
         <Icon>
-          <ShoppingCartOutlined />
+          <ShoppingCartOutlined onClick={handleClick} />
         </Icon>
         <Icon>
           <Link
